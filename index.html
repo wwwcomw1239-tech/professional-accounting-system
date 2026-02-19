@@ -3,93 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام المحاسبة الاحترافي | Professional Accounting</title>
+    <title>نظام المحاسبة الاحترافي | الإصدار المطور</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="brand">
-                <i class="fas fa-chart-line"></i>
-                <h2>المحاسب الذكي</h2>
+                <i class="fas fa-chart-pie"></i>
+                <h2 id="company-name-display">المحاسب الذكي</h2>
             </div>
             <nav class="nav-menu">
-                <a href="#" class="nav-item active" data-view="dashboard">
+                <a href="#" class="nav-item active" data-view="dashboard" onclick="closeSidebarMobile()">
                     <i class="fas fa-home"></i> لوحة التحكم
                 </a>
-                <a href="#" class="nav-item" data-view="invoices">
+                <a href="#" class="nav-item" data-view="invoices" onclick="closeSidebarMobile()">
                     <i class="fas fa-file-invoice-dollar"></i> الفواتير
                 </a>
-                <a href="#" class="nav-item" data-view="expenses">
+                <a href="#" class="nav-item" data-view="expenses" onclick="closeSidebarMobile()">
                     <i class="fas fa-money-bill-wave"></i> المصروفات
                 </a>
-                <a href="#" class="nav-item" data-view="customers">
+                <a href="#" class="nav-item" data-view="customers" onclick="closeSidebarMobile()">
                     <i class="fas fa-users"></i> العملاء
                 </a>
-                <a href="#" class="nav-item" data-view="reports">
-                    <i class="fas fa-chart-pie"></i> التقارير
+                <a href="#" class="nav-item" data-view="reports" onclick="closeSidebarMobile()">
+                    <i class="fas fa-file-alt"></i> التقارير
                 </a>
-                <a href="#" class="nav-item" data-view="settings">
+                <a href="#" class="nav-item" data-view="settings" onclick="closeSidebarMobile()">
                     <i class="fas fa-cog"></i> الإعدادات
                 </a>
             </nav>
+            <div class="sidebar-footer">
+                <p>الإصدار 2.0</p>
+            </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="top-bar">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="بحث عام...">
+                <div class="page-title">
+                    <h2 id="page-header">لوحة التحكم</h2>
                 </div>
                 <div class="user-profile">
-                    <div class="notifications">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge">3</span>
-                    </div>
-                    <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" alt="User" class="avatar">
+                    <span id="current-date"></span>
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=4f46e5&color=fff" alt="User" class="avatar">
                 </div>
             </header>
 
-            <!-- Views -->
+            <!-- Dashboard View -->
             <div id="dashboard-view" class="view active">
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="icon revenue"><i class="fas fa-wallet"></i></div>
+                        <div class="icon revenue"><i class="fas fa-arrow-down"></i></div>
                         <div class="stat-info">
                             <h3>إجمالي الإيرادات</h3>
-                            <p id="total-revenue">0 ر.ي</p>
-                            <span class="trend up"><i class="fas fa-arrow-up"></i> +12%</span>
+                            <p id="total-revenue">0.00</p>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="icon expense"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="icon expense"><i class="fas fa-arrow-up"></i></div>
                         <div class="stat-info">
-                            <h3>المصروفات</h3>
-                            <p id="total-expenses">0 ر.ي</p>
-                            <span class="trend down"><i class="fas fa-arrow-down"></i> -5%</span>
+                            <h3>إجمالي المصروفات</h3>
+                            <p id="total-expenses">0.00</p>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="icon profit"><i class="fas fa-coins"></i></div>
+                        <div class="icon profit"><i class="fas fa-wallet"></i></div>
                         <div class="stat-info">
                             <h3>صافي الربح</h3>
-                            <p id="net-profit">0 ر.ي</p>
-                            <span class="trend up"><i class="fas fa-arrow-up"></i> +8%</span>
+                            <p id="net-profit">0.00</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="dashboard-charts">
                     <div class="chart-container">
-                        <h3>الأداء المالي</h3>
-                        <canvas id="mainChart"></canvas>
+                        <h3><i class="fas fa-chart-area"></i> التحليل المالي (آخر 6 أشهر)</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="mainChart"></canvas>
+                        </div>
                     </div>
                     <div class="recent-transactions">
-                        <h3>أحدث المعاملات</h3>
-                        <ul id="recent-list">
+                        <h3><i class="fas fa-history"></i> أحدث العمليات</h3>
+                        <ul id="recent-list" class="transaction-list">
                             <!-- Populated by JS -->
                         </ul>
                     </div>
@@ -98,8 +103,11 @@
 
             <!-- Invoices View -->
             <div id="invoices-view" class="view">
-                <div class="view-header">
-                    <h2>إدارة الفواتير</h2>
+                <div class="action-bar">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="invoice-search" placeholder="بحث باسم العميل..." onkeyup="searchInvoices()">
+                    </div>
                     <button class="btn-primary" onclick="openModal('invoice-modal')">
                         <i class="fas fa-plus"></i> فاتورة جديدة
                     </button>
@@ -116,35 +124,122 @@
                                 <th>إجراءات</th>
                             </tr>
                         </thead>
-                        <tbody id="invoices-table-body">
-                            <!-- JS Populated -->
-                        </tbody>
+                        <tbody id="invoices-table-body"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Other views placeholders for simplicity -->
-            <div id="expenses-view" class="view"><h2>المصروفات (قيد التطوير)</h2></div>
-            <div id="customers-view" class="view"><h2>العملاء (قيد التطوير)</h2></div>
-            <div id="reports-view" class="view"><h2>التقارير (قيد التطوير)</h2></div>
-            <div id="settings-view" class="view"><h2>الإعدادات (قيد التطوير)</h2></div>
+            <!-- Expenses View -->
+            <div id="expenses-view" class="view">
+                <div class="action-bar">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="expense-search" placeholder="بحث في المصروفات..." onkeyup="searchExpenses()">
+                    </div>
+                    <button class="btn-primary" onclick="openModal('expense-modal')">
+                        <i class="fas fa-plus"></i> مصروف جديد
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>البند</th>
+                                <th>التصنيف</th>
+                                <th>التاريخ</th>
+                                <th>المبلغ</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expenses-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Customers View -->
+            <div id="customers-view" class="view">
+                <div class="action-bar">
+                    <button class="btn-primary" onclick="openModal('customer-modal')">
+                        <i class="fas fa-plus"></i> عميل جديد
+                    </button>
+                </div>
+                <div class="customers-grid" id="customers-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Reports View -->
+            <div id="reports-view" class="view">
+                <div class="reports-container">
+                    <div class="report-card">
+                        <h3>ملخص مالي شامل</h3>
+                        <div class="report-row">
+                            <span>عدد الفواتير:</span>
+                            <span id="rep-inv-count">0</span>
+                        </div>
+                        <div class="report-row">
+                            <span>الفواتير المدفوعة:</span>
+                            <span id="rep-paid-count" class="text-success">0</span>
+                        </div>
+                        <div class="report-row">
+                            <span>الفواتير المعلقة:</span>
+                            <span id="rep-pending-count" class="text-warning">0</span>
+                        </div>
+                        <hr>
+                        <div class="report-row">
+                            <span>نسبة الربح:</span>
+                            <span id="rep-profit-margin">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings-view" class="view">
+                <div class="settings-container">
+                    <div class="settings-card">
+                        <h3>إعدادات النظام</h3>
+                        <form id="settings-form">
+                            <div class="form-group">
+                                <label>اسم الشركة/المؤسسة</label>
+                                <input type="text" id="set-company-name">
+                            </div>
+                            <div class="form-group">
+                                <label>رمز العملة</label>
+                                <input type="text" id="set-currency" placeholder="مثال: ر.ي، $، SAR">
+                            </div>
+                            <button type="submit" class="btn-primary">حفظ الإعدادات</button>
+                        </form>
+                    </div>
+                    <div class="settings-card danger-zone">
+                        <h3>منطقة الخطر</h3>
+                        <p>حذف جميع البيانات (الفواتير، المصروفات، العملاء) لا يمكن التراجع عنه.</p>
+                        <button onclick="resetSystem()" class="btn-danger">تهيئة النظام بالكامل</button>
+                    </div>
+                </div>
+            </div>
 
         </main>
     </div>
 
-    <!-- Modals -->
+    <!-- Modal: New Invoice -->
     <div id="invoice-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('invoice-modal')">&times;</span>
-            <h2>إنشاء فاتورة جديدة</h2>
+            <div class="modal-header">
+                <h3>إضافة فاتورة جديدة</h3>
+                <span class="close" onclick="closeModal('invoice-modal')">&times;</span>
+            </div>
             <form id="invoice-form">
                 <div class="form-group">
                     <label>العميل</label>
-                    <input type="text" id="inv-customer" required>
+                    <select id="inv-customer-select" required>
+                        <option value="">اختر العميل...</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>المبلغ</label>
-                    <input type="number" id="inv-amount" required>
+                    <input type="number" id="inv-amount" min="0" step="0.01" required>
                 </div>
                 <div class="form-group">
                     <label>التاريخ</label>
@@ -153,11 +248,70 @@
                 <div class="form-group">
                     <label>الحالة</label>
                     <select id="inv-status">
-                        <option value="paid">مدفوعة</option>
-                        <option value="pending">معلقة</option>
+                        <option value="paid">مدفوعة (Paid)</option>
+                        <option value="pending">معلقة (Pending)</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary">حفظ الفاتورة</button>
+                <button type="submit" class="btn-primary full-width">حفظ الفاتورة</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: New Expense -->
+    <div id="expense-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تسجيل مصروف جديد</h3>
+                <span class="close" onclick="closeModal('expense-modal')">&times;</span>
+            </div>
+            <form id="expense-form">
+                <div class="form-group">
+                    <label>بند المصروف</label>
+                    <input type="text" id="exp-title" placeholder="مثال: إيجار، كهرباء..." required>
+                </div>
+                <div class="form-group">
+                    <label>التصنيف</label>
+                    <select id="exp-category">
+                        <option value="تشغيلية">تشغيلية</option>
+                        <option value="رواتب">رواتب</option>
+                        <option value="تسويق">تسويق</option>
+                        <option value="أخرى">أخرى</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المبلغ</label>
+                    <input type="number" id="exp-amount" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>التاريخ</label>
+                    <input type="date" id="exp-date" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">حفظ المصروف</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: New Customer -->
+    <div id="customer-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة عميل جديد</h3>
+                <span class="close" onclick="closeModal('customer-modal')">&times;</span>
+            </div>
+            <form id="customer-form">
+                <div class="form-group">
+                    <label>اسم العميل</label>
+                    <input type="text" id="cust-name" required>
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="cust-phone">
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني (اختياري)</label>
+                    <input type="email" id="cust-email">
+                </div>
+                <button type="submit" class="btn-primary full-width">حفظ العميل</button>
             </form>
         </div>
     </div>
