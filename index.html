@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام المحاسبة الاحترافي | Professional Accounting</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fas fa-chart-line"></i>
+                <h2>المحاسب الذكي</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <i class="fas fa-home"></i> لوحة التحكم
+                </a>
+                <a href="#" class="nav-item" data-view="invoices">
+                    <i class="fas fa-file-invoice-dollar"></i> الفواتير
+                </a>
+                <a href="#" class="nav-item" data-view="expenses">
+                    <i class="fas fa-money-bill-wave"></i> المصروفات
+                </a>
+                <a href="#" class="nav-item" data-view="customers">
+                    <i class="fas fa-users"></i> العملاء
+                </a>
+                <a href="#" class="nav-item" data-view="reports">
+                    <i class="fas fa-chart-pie"></i> التقارير
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <i class="fas fa-cog"></i> الإعدادات
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث عام...">
+                </div>
+                <div class="user-profile">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" alt="User" class="avatar">
+                </div>
+            </header>
+
+            <!-- Views -->
+            <div id="dashboard-view" class="view active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="icon revenue"><i class="fas fa-wallet"></i></div>
+                        <div class="stat-info">
+                            <h3>إجمالي الإيرادات</h3>
+                            <p id="total-revenue">0 ر.ي</p>
+                            <span class="trend up"><i class="fas fa-arrow-up"></i> +12%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon expense"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="stat-info">
+                            <h3>المصروفات</h3>
+                            <p id="total-expenses">0 ر.ي</p>
+                            <span class="trend down"><i class="fas fa-arrow-down"></i> -5%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon profit"><i class="fas fa-coins"></i></div>
+                        <div class="stat-info">
+                            <h3>صافي الربح</h3>
+                            <p id="net-profit">0 ر.ي</p>
+                            <span class="trend up"><i class="fas fa-arrow-up"></i> +8%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts">
+                    <div class="chart-container">
+                        <h3>الأداء المالي</h3>
+                        <canvas id="mainChart"></canvas>
+                    </div>
+                    <div class="recent-transactions">
+                        <h3>أحدث المعاملات</h3>
+                        <ul id="recent-list">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invoices View -->
+            <div id="invoices-view" class="view">
+                <div class="view-header">
+                    <h2>إدارة الفواتير</h2>
+                    <button class="btn-primary" onclick="openModal('invoice-modal')">
+                        <i class="fas fa-plus"></i> فاتورة جديدة
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>العميل</th>
+                                <th>التاريخ</th>
+                                <th>المبلغ</th>
+                                <th>الحالة</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoices-table-body">
+                            <!-- JS Populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Other views placeholders for simplicity -->
+            <div id="expenses-view" class="view"><h2>المصروفات (قيد التطوير)</h2></div>
+            <div id="customers-view" class="view"><h2>العملاء (قيد التطوير)</h2></div>
+            <div id="reports-view" class="view"><h2>التقارير (قيد التطوير)</h2></div>
+            <div id="settings-view" class="view"><h2>الإعدادات (قيد التطوير)</h2></div>
+
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="invoice-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('invoice-modal')">&times;</span>
+            <h2>إنشاء فاتورة جديدة</h2>
+            <form id="invoice-form">
+                <div class="form-group">
+                    <label>العميل</label>
+                    <input type="text" id="inv-customer" required>
+                </div>
+                <div class="form-group">
+                    <label>المبلغ</label>
+                    <input type="number" id="inv-amount" required>
+                </div>
+                <div class="form-group">
+                    <label>التاريخ</label>
+                    <input type="date" id="inv-date" required>
+                </div>
+                <div class="form-group">
+                    <label>الحالة</label>
+                    <select id="inv-status">
+                        <option value="paid">مدفوعة</option>
+                        <option value="pending">معلقة</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">حفظ الفاتورة</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
