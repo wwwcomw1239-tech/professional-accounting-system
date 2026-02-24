@@ -1,40 +1,57 @@
-# نظام محاسبي احترافي متكامل 📊
+# أكاديمية المحاسبة العربية (arabic-accounting-academy)
 
-نظام محاسبي حديث مبني باستخدام تقنيات الويب القياسية (HTML, CSS, JavaScript) مصمم لتلبية احتياجات الشركات الصغيرة والمتوسطة. يتميز النظام بواجهة مستخدم عصرية وأدوات تحليل مالية قوية.
+منصة Next.js جاهزة لتعلم المحاسبة مجاناً باللغة العربية (RTL) مع هيكل محتوى MDX قابل للتوسعة.
 
-## 🔗 معاينة مباشرة (اضغط هنا)
-**[تشغيل النظام الآن (Live Preview)](https://htmlpreview.github.io/?https://github.com/wwwcomw1239-tech/professional-accounting-system/blob/main/index.html)**
+## التشغيل المحلي
+```bash
+npm install
+npm run dev
+```
+ثم افتح: `http://localhost:3000`
 
-## ✨ المميزات الرئيسية
+## الأوامر المهمة
+```bash
+npm run lint
+npm run build
+npm run test
+npm run format:check
+```
 
-- **لوحة تحكم تفاعلية**: عرض فوري للمؤشرات المالية الهامة (الإيرادات، المصروفات، الأرباح).
-- **إدارة الفواتير**: إنشاء وتتبع وحذف الفواتير بسهولة مع حالات دفع متعددة.
-- **تخزين محلي آمن**: جميع البيانات تحفظ محلياً على المتصفح (localStorage) لضمان الخصوصية والسرعة.
-- **تصميم متجاوب**: يعمل بكفاءة على جميع الأجهزة (سطح المكتب، التابلت، الموبايل).
-- **تقارير بيانية**: رسوم بيانية توضيحية للأداء المالي باستخدام مكتبة Chart.js.
-- **دعم اللغة العربية**: واجهة عربية بالكامل مع دعم اتجاه RTL.
+## هيكل المحتوى
+```text
+content/
+  tracks/
+  courses/
+    [course-slug]/
+      index.mdx
+      lessons/
+        01-lesson.mdx
+  glossary/
+  downloads/
+  pages/
+```
 
-## 🚀 طريقة الاستخدام
+## إضافة دورة جديدة
+1. أنشئ مجلد: `content/courses/<course-slug>`.
+2. أضف ملف `index.mdx` مع frontmatter:
+   - `title, slug, description, order, level, duration, tags`
+3. أنشئ `lessons/` وأضف ملفات مثل `01-intro.mdx`.
+4. لكل درس استخدم frontmatter:
+   - `title, slug, description, order, duration, tags`
+5. شغّل `npm run dev` وتحقق من ظهور الدورة تلقائياً في `/courses`.
 
-1. قم بتحميل الملفات أو استنساخ المستودع:
-   ```bash
-   git clone https://github.com/wwwcomw1239-tech/professional-accounting-system.git
-   ```
-2. افتح ملف `index.html` في أي متصفح حديث.
-3. ابدأ في إضافة الفواتير والعملاء مباشرة.
+## SEO
+- Metadata أساسي + OpenGraph في `app/layout.tsx`.
+- `app/sitemap.ts` و `app/robots.ts` مفعّلة.
 
-## 🛠 التقنيات المستخدمة
+## النشر على Vercel
+1. ارفع المشروع إلى GitHub.
+2. من Vercel اختر **New Project**.
+3. اربط المستودع واضغط Deploy.
+4. اضبط `NEXT_PUBLIC_SITE_URL` في Environment Variables.
 
-- **Frontend**: HTML5, CSS3 (Flexbox/Grid), Vanilla JavaScript
-- **Libraries**: Chart.js (للرسوم البيانية), FontAwesome (للأيقونات)
-- **Storage**: LocalStorage API
+## GitHub Actions
+يوجد workflow بسيط لبناء/فحص المشروع عند كل push.
 
-## 📝 التطوير المستقبلي
-
-- [ ] إضافة نظام إدارة المخزون
-- [ ] تصدير التقارير إلى PDF/Excel
-- [ ] دعم تعدد المستخدمين
-- [ ] الربط مع قواعد بيانات سحابية (Firebase)
-
----
-تم التطوير بواسطة [wwwcomw1239-tech](https://github.com/wwwcomw1239-tech)
+## الترخيص
+MIT
